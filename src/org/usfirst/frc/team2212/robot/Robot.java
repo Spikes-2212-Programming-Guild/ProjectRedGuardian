@@ -4,11 +4,14 @@ package org.usfirst.frc.team2212.robot;
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
+import com.spikes2212.utils.DashBoardController;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,8 +26,10 @@ public class Robot extends IterativeRobot {
 
 	public static Drivetrain drivetrain;
 	public static OI oi;
+	NetworkTable cameraInfo;
 	Command autonomousCommand;
 	SendableChooser chooser;
+	DashBoardController dashboard;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,10 +43,13 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
-//		SmartDashboard.putDouble("KP",0);
-//		SmartDashboard.putDouble("KI",0);
-//		SmartDashboard.putDouble("KD",0);
-		SmartDashboard.putData("Auto mode", chooser);
+		// SmartDashboard.putDouble("KP",0);
+		// SmartDashboard.putDouble("KI",0);
+		// SmartDashboard.putDouble("KD",0);
+		cameraInfo = NetworkTable.getTable("ImageProcessing");
+		dashboard = new DashBoardController();
+		dashboard.addDouble("X", () -> cameraInfo.getNumber("x", 0));
+		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(cameraInfo.getNumber("x", 0)));
 	}
 
 	/**
@@ -50,9 +58,9 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-//		Constants.KP=SmartDashboard.getDouble("KP");
-//		Constants.KI=SmartDashboard.getDouble("KI");
-//		Constants.KD=SmartDashboard.getDouble("KD");
+		// Constants.KP=SmartDashboard.getDouble("KP");
+		// Constants.KI=SmartDashboard.getDouble("KI");
+		// Constants.KD=SmartDashboard.getDouble("KD");
 		drivetrain.restEncoders();
 	}
 
@@ -98,7 +106,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-
+		SmartDashboard.putData(new DriveTank(drivetrain, SmartDashboard.getNumber("TurnSpeed"),
+				SmartDashboard.getNumber("TurnSpeed")));
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -107,9 +116,10 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-//		RobotMap.Commands.pidForward.setP(SmartDashboard.getDouble("KP"));
-//		RobotMap.Commands.pidForward.setI(SmartDashboard.getDouble("KI"));
-//		RobotMap.Commands.pidForward.setD(SmartDashboard.getDouble("KD"));
+		// RobotMap.Commands.pidForward.setP(SmartDashboard.getDouble("KP"));
+		// RobotMap.Commands.pidForward.setI(SmartDashboard.getDouble("KI"));
+		// RobotMap.Commands.pidForward.setD(SmartDashboard.getDouble("KD"));
+		dashboard.update();
 		Scheduler.getInstance().run();
 	}
 

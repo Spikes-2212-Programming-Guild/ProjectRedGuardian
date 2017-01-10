@@ -16,7 +16,6 @@ public class OI {
 	public OI() {
 		joy= new Joystick(0);
 		forward= new JoystickButton(joy, 2);
-		forward.whenPressed(RobotMap.Commands.pidForward);
 	}
 }
 
