@@ -30,6 +30,7 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser chooser;
 	DashBoardController dashboard;
+	public static final String x = "centre";
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -48,8 +49,10 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putDouble("KD",0);
 		cameraInfo = NetworkTable.getTable("ImageProcessing");
 		dashboard = new DashBoardController();
-		dashboard.addDouble("X", () -> cameraInfo.getNumber("x", 0));
-		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(cameraInfo.getNumber("x", 0)));
+		dashboard.addDouble(x, () -> cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0));
+		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(x) > 0);
+		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(x) < 0);
+		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(x)));
 	}
 
 	/**
@@ -62,6 +65,8 @@ public class Robot extends IterativeRobot {
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
 		drivetrain.restEncoders();
+		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed"),
+				() -> -SmartDashboard.getNumber("TurnSpeed")));
 	}
 
 	public void disabledPeriodic() {
@@ -106,8 +111,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		SmartDashboard.putData(new DriveTank(drivetrain, SmartDashboard.getNumber("TurnSpeed"),
-				SmartDashboard.getNumber("TurnSpeed")));
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
