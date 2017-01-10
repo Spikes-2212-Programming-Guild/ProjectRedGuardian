@@ -13,7 +13,7 @@ public class Drivetrain extends TankDrivetrain {
 	private SpeedController left, right;
 	private Encoder leftEncoder, rightEncoder;
 
-	public Drivetrain(DoubleSpeedcontroller left, DoubleSpeedcontroller right, Encoder leftEncoder,
+	public Drivetrain(SpeedController left, SpeedController right, Encoder leftEncoder,
 			Encoder rightEncoder) {
 		super();
 		this.left = left;
@@ -28,6 +28,11 @@ public class Drivetrain extends TankDrivetrain {
 		this.left = new DoubleSpeedcontroller(new VictorSP(frontRightPort), new VictorSP(rearRightPort));
 		this.leftEncoder = new Encoder(leftEncoderChannelA, leftEncoderChannelB);
 		this.rightEncoder = new Encoder(rightEncoderChannelA, rightEncoderChannelB);
+	}
+	
+	public void restEncoders(){
+		leftEncoder.reset();
+		rightEncoder.reset();
 	}
 
 	@Override
@@ -48,13 +53,13 @@ public class Drivetrain extends TankDrivetrain {
 	@Override
 	public PIDSource getLeftPIDSource() {
 		// TODO Auto-generated method stub
-		return null;
+		return leftEncoder;
 	}
 
 	@Override
 	public PIDSource getRightPIDSource() {
 		// TODO Auto-generated method stub
-		return null;
+		return rightEncoder;
 	}
 
 }
