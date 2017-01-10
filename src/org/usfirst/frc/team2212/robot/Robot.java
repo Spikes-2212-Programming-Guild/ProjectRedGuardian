@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putDouble("KD",0);
 		cameraInfo = NetworkTable.getTable("ImageProcessing");
 		dashboard = new DashBoardController();
-		dashboard.addDouble(x, () -> cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0));
+		dashboard.addDouble(x, () -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0))/Constants.CAMERA_WIDTH);
 		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(x) > 0);
 		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(x) < 0);
 		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(x)));
