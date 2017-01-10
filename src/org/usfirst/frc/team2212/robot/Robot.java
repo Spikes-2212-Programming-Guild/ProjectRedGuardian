@@ -38,9 +38,9 @@ public class Robot extends IterativeRobot {
 		chooser = new SendableChooser();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
-		SmartDashboard.putDouble("KP",0);
-		SmartDashboard.putDouble("KI",0);
-		SmartDashboard.putDouble("KD",0);
+//		SmartDashboard.putDouble("KP",0);
+//		SmartDashboard.putDouble("KI",0);
+//		SmartDashboard.putDouble("KD",0);
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -107,9 +107,9 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		RobotMap.Commands.pidForward.setP(SmartDashboard.getDouble("KP"));
-		RobotMap.Commands.pidForward.setI(SmartDashboard.getDouble("KI"));
-		RobotMap.Commands.pidForward.setD(SmartDashboard.getDouble("KD"));
+//		RobotMap.Commands.pidForward.setP(SmartDashboard.getDouble("KP"));
+//		RobotMap.Commands.pidForward.setI(SmartDashboard.getDouble("KI"));
+//		RobotMap.Commands.pidForward.setD(SmartDashboard.getDouble("KD"));
 		Scheduler.getInstance().run();
 	}
 
