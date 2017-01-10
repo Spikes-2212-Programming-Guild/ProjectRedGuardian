@@ -50,9 +50,9 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
 	 */
 	public void disabledInit() {
-		Constants.KP=SmartDashboard.getDouble("KP");
-		Constants.KI=SmartDashboard.getDouble("KI");
-		Constants.KD=SmartDashboard.getDouble("KD");
+//		Constants.KP=SmartDashboard.getDouble("KP");
+//		Constants.KI=SmartDashboard.getDouble("KI");
+//		Constants.KD=SmartDashboard.getDouble("KD");
 		drivetrain.restEncoders();
 	}
 
