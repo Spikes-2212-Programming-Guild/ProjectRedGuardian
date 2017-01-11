@@ -3,7 +3,6 @@ package org.usfirst.frc.team2212.robot;
 
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
-import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.utils.DashBoardController;
 
