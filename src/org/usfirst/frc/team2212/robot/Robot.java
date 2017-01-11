@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser chooser;
 	DashBoardController dashboard;
-	public static final String x = "centre";
+	public static final String x = "center";
 
 	/**
 	 * This function is run when the robot is first started up and should be
