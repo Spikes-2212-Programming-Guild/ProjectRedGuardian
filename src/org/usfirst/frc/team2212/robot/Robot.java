@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		drivetrain.restEncoders();
+		drivetrain.resetEncoders();
 		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed"),
 				() -> -SmartDashboard.getNumber("TurnSpeed")));
 	}

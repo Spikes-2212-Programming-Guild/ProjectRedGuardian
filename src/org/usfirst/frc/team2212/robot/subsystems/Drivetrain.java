@@ -13,8 +13,7 @@ public class Drivetrain extends TankDrivetrain {
 	private SpeedController left, right;
 	private Encoder leftEncoder, rightEncoder;
 
-	public Drivetrain(SpeedController left, SpeedController right, Encoder leftEncoder,
-			Encoder rightEncoder) {
+	public Drivetrain(SpeedController left, SpeedController right, Encoder leftEncoder, Encoder rightEncoder) {
 		super();
 		this.left = left;
 		this.right = right;
@@ -29,8 +28,8 @@ public class Drivetrain extends TankDrivetrain {
 		this.leftEncoder = new Encoder(leftEncoderChannelA, leftEncoderChannelB);
 		this.rightEncoder = new Encoder(rightEncoderChannelA, rightEncoderChannelB);
 	}
-	
-	public void restEncoders(){
+
+	public void resetEncoders() {
 		leftEncoder.reset();
 		rightEncoder.reset();
 	}
