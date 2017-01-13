@@ -12,18 +12,15 @@ public class Drivetrain extends TankDrivetrain {
 
 	private SpeedController left, right;
 
-	public Drivetrain(SpeedController left, SpeedController right, Encoder leftEncoder, Encoder rightEncoder) {
+	public Drivetrain(SpeedController left, SpeedController right) {
 		super();
 		this.left = left;
 		this.right = right;
 	}
 
 	public Drivetrain(int frontLeftPort, int frontRightPort, int rearLeftPort, int rearRightPort) {
-		this.left = new DoubleSpeedcontroller(new VictorSP(frontLeftPort), new VictorSP(rearLeftPort));
-		this.left = new DoubleSpeedcontroller(new VictorSP(frontRightPort), new VictorSP(rearRightPort));
-	}
-
-	public void resetEncoders() {
+		this(new DoubleSpeedcontroller(new VictorSP(frontLeftPort), new VictorSP(rearLeftPort)),
+				new DoubleSpeedcontroller(new VictorSP(frontRightPort), new VictorSP(rearRightPort)));
 	}
 
 	@Override
