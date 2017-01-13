@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team2212.robot;
 
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
@@ -36,23 +35,32 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
-				RobotMap.REAR_RIGHT_PORT, RobotMap.LEFT_ENCODER_A, RobotMap.LEFT_ENCODER_B, RobotMap.RIGHT_ENCODER_A,
+		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT,
+				RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
+				RobotMap.REAR_RIGHT_PORT, RobotMap.LEFT_ENCODER_A,
+				RobotMap.LEFT_ENCODER_B, RobotMap.RIGHT_ENCODER_A,
 				RobotMap.RIGHT_ENCODER_B);
-		oi = new OI();
+
 		chooser = new SendableChooser();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		// SmartDashboard.putDouble("KP",0);
 		// SmartDashboard.putDouble("KI",0);
 		// SmartDashboard.putDouble("KD",0);
+
 		cameraInfo = NetworkTable.getTable("ImageProcessing");
 		dashboard = new DashBoardController();
-		dashboard.addDouble(center,
-				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
-		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center) > 0);
-		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center) < 0);
-		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center)));
+		dashboard.addDouble(
+				center,
+				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo
+						.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
+		dashboard.addBoolean("isRight",
+				() -> SmartDashboard.getNumber(center) > 0.5);
+		dashboard.addBoolean("isLeft",
+				() -> SmartDashboard.getNumber(center) < 0.5);
+		dashboard.addDouble("TurnSpeed",
+				() -> Constants.getTurnSpeed(SmartDashboard.getNumber(center)));
+		oi = new OI();
 	}
 
 	/**
@@ -65,8 +73,9 @@ public class Robot extends IterativeRobot {
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
 		drivetrain.resetEncoders();
-		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed"),
-				() -> -SmartDashboard.getNumber("TurnSpeed")));
+		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard
+				.getNumber("TurnSpeed"), () -> -SmartDashboard
+				.getNumber("TurnSpeed")));
 	}
 
 	public void disabledPeriodic() {
