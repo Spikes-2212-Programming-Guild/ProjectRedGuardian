@@ -38,7 +38,6 @@ public class Robot extends IterativeRobot {
 		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
 				RobotMap.REAR_RIGHT_PORT);
 
-		chooser = new SendableChooser();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		// SmartDashboard.putDouble("KP",0);
@@ -49,9 +48,9 @@ public class Robot extends IterativeRobot {
 		dashboard = new DashBoardController();
 		dashboard.addDouble(center,
 				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
-		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center,0) > 0.5);
-		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center,0) < 0.5);
-		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center,0)));
+		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0.5);
+		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0.5);
+		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center, 0.5)));
 		oi = new OI();
 	}
 
@@ -64,12 +63,12 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		drivetrain.resetEncoders();
 		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed", 0),
 				() -> -SmartDashboard.getNumber("TurnSpeed", 0)));
 	}
 
 	public void disabledPeriodic() {
+		dashboard.update();
 		Scheduler.getInstance().run();
 	}
 
