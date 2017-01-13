@@ -11,27 +11,19 @@ import edu.wpi.first.wpilibj.VictorSP;
 public class Drivetrain extends TankDrivetrain {
 
 	private SpeedController left, right;
-	private Encoder leftEncoder, rightEncoder;
 
 	public Drivetrain(SpeedController left, SpeedController right, Encoder leftEncoder, Encoder rightEncoder) {
 		super();
 		this.left = left;
 		this.right = right;
-		this.leftEncoder = leftEncoder;
-		this.rightEncoder = rightEncoder;
 	}
 
-	public Drivetrain(int frontLeftPort, int frontRightPort, int rearLeftPort, int rearRightPort,
-			int leftEncoderChannelA, int leftEncoderChannelB, int rightEncoderChannelA, int rightEncoderChannelB) {
+	public Drivetrain(int frontLeftPort, int frontRightPort, int rearLeftPort, int rearRightPort) {
 		this.left = new DoubleSpeedcontroller(new VictorSP(frontLeftPort), new VictorSP(rearLeftPort));
 		this.left = new DoubleSpeedcontroller(new VictorSP(frontRightPort), new VictorSP(rearRightPort));
-		this.leftEncoder = new Encoder(leftEncoderChannelA, leftEncoderChannelB);
-		this.rightEncoder = new Encoder(rightEncoderChannelA, rightEncoderChannelB);
 	}
 
 	public void resetEncoders() {
-		leftEncoder.reset();
-		rightEncoder.reset();
 	}
 
 	@Override
@@ -52,13 +44,13 @@ public class Drivetrain extends TankDrivetrain {
 	@Override
 	public PIDSource getLeftPIDSource() {
 		// TODO Auto-generated method stub
-		return leftEncoder;
+		return null;
 	}
 
 	@Override
 	public PIDSource getRightPIDSource() {
 		// TODO Auto-generated method stub
-		return rightEncoder;
+		return null;
 	}
 
 }

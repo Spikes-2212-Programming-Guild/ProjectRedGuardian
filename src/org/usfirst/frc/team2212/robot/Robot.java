@@ -35,11 +35,8 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT,
-				RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
-				RobotMap.REAR_RIGHT_PORT, RobotMap.LEFT_ENCODER_A,
-				RobotMap.LEFT_ENCODER_B, RobotMap.RIGHT_ENCODER_A,
-				RobotMap.RIGHT_ENCODER_B);
+		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
+				RobotMap.REAR_RIGHT_PORT);
 
 		chooser = new SendableChooser();
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -50,16 +47,11 @@ public class Robot extends IterativeRobot {
 
 		cameraInfo = NetworkTable.getTable("ImageProcessing");
 		dashboard = new DashBoardController();
-		dashboard.addDouble(
-				center,
-				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo
-						.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
-		dashboard.addBoolean("isRight",
-				() -> SmartDashboard.getNumber(center) > 0.5);
-		dashboard.addBoolean("isLeft",
-				() -> SmartDashboard.getNumber(center) < 0.5);
-		dashboard.addDouble("TurnSpeed",
-				() -> Constants.getTurnSpeed(SmartDashboard.getNumber(center)));
+		dashboard.addDouble(center,
+				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
+		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center,0) > 0.5);
+		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center,0) < 0.5);
+		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center,0)));
 		oi = new OI();
 	}
 
@@ -73,9 +65,8 @@ public class Robot extends IterativeRobot {
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
 		drivetrain.resetEncoders();
-		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard
-				.getNumber("TurnSpeed"), () -> -SmartDashboard
-				.getNumber("TurnSpeed")));
+		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed", 0),
+				() -> -SmartDashboard.getNumber("TurnSpeed", 0)));
 	}
 
 	public void disabledPeriodic() {

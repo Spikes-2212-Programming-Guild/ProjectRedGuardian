@@ -10,17 +10,12 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
  */
 public class RobotMap {
 
-	public static final int FRONT_LEFT_PORT = 0;
-	public static final int REAR_LEFT_PORT = 0;
-	public static final int FRONT_RIGHT_PORT = 0;
-	public static final int REAR_RIGHT_PORT = 0;
-	public static final int RIGHT_ENCODER_A = 0;
-	public static final int RIGHT_ENCODER_B = 0;
-	public static final int LEFT_ENCODER_A = 0;
-	public static final int LEFT_ENCODER_B = 0;
+	public static final int FRONT_LEFT_PORT = 2;
+	public static final int REAR_LEFT_PORT = 1;
+	public static final int FRONT_RIGHT_PORT = 9;
+	public static final int REAR_RIGHT_PORT = 8;
 
 	public interface Commands {
-		public static DriveTankWithPID pidForward = new DriveTankWithPID(Constants.setpoint, Robot.drivetrain);
 	}
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
