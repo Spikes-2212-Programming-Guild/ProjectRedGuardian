@@ -3,9 +3,12 @@ package org.usfirst.frc.team2212.robot;
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
-import com.spikes2212.utils.DashBoardController;
+import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
+import com.spikes2212.dashboard.DashBoardController;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -24,7 +27,6 @@ public class Robot extends IterativeRobot {
 
 	public static Drivetrain drivetrain;
 	public static OI oi;
-	NetworkTable cameraInfo;
 	Command autonomousCommand;
 	SendableChooser chooser;
 	DashBoardController dashboard;
@@ -44,13 +46,12 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putDouble("KI",0);
 		// SmartDashboard.putDouble("KD",0);
 
-		cameraInfo = NetworkTable.getTable("ImageProcessing");
 		dashboard = new DashBoardController();
 		dashboard.addDouble(center,
-				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
+				() -> (Constants.cameraInfo.getNumber("x", 0) + 0.5 * Constants.cameraInfo.getNumber("width", 0))
+						/ Constants.CAMERA_WIDTH);
 		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0.5);
 		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0.5);
-		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center, 0.5)));
 		oi = new OI();
 	}
 
@@ -63,8 +64,9 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed", 0),
-				() -> -SmartDashboard.getNumber("TurnSpeed", 0)));
+		SmartDashboard.putData(new DriveTankWithPID(Constants.cameraInfo.getNumber(center, 0.5) - 0.5,
+				-(Constants.cameraInfo.getNumber(center, 0.5) - 0.5), Constants.KP.get(), Constants.KI.get(),
+				Constants.KD.get(), drivetrain, Constants.leftSource, Constants.rightSource));
 	}
 
 	public void disabledPeriodic() {
