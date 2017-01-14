@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	Command autonomousCommand;
 	SendableChooser chooser;
-	DashBoardController dashboard;
+	public static DashBoardController dashboard;
 	public static final String center = "center";
 
 	/**
@@ -37,6 +37,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		dashboard = new DashBoardController();
 		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
 				RobotMap.REAR_RIGHT_PORT);
 
@@ -45,8 +46,6 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putDouble("KP",0);
 		// SmartDashboard.putDouble("KI",0);
 		// SmartDashboard.putDouble("KD",0);
-
-		dashboard = new DashBoardController();
 		dashboard.addDouble(center,
 				() -> (Constants.cameraInfo.getNumber("x", 0) + 0.5 * Constants.cameraInfo.getNumber("width", 0))
 						/ Constants.CAMERA_WIDTH);
@@ -64,9 +63,10 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		SmartDashboard.putData(new DriveTankWithPID(Constants.cameraInfo.getNumber(center, 0.5) - 0.5,
-				-(Constants.cameraInfo.getNumber(center, 0.5) - 0.5), Constants.KP.get(), Constants.KI.get(),
-				Constants.KD.get(), drivetrain, Constants.leftSource, Constants.rightSource));
+		SmartDashboard.putData(new DriveTankWithPID(0, 0, Constants.KP.get(), Constants.KI.get(), Constants.KD.get(),
+				drivetrain, Constants.leftSource, Constants.rightSource));
+		dashboard.addDouble("right Source", Constants.rightSource::pidGet);
+		dashboard.addDouble("left Source", Constants.leftSource::pidGet);
 	}
 
 	public void disabledPeriodic() {

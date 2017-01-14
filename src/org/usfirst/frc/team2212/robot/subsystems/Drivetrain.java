@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2212.robot.subsystems;
 
+import org.usfirst.frc.team2212.robot.Robot;
+
 import com.spikes2212.genericsubsystems.drivetrains.TankDrivetrain;
 import com.spikes2212.utils.DoubleSpeedcontroller;
 
@@ -14,6 +16,8 @@ public class Drivetrain extends TankDrivetrain {
 
 	public Drivetrain(SpeedController left, SpeedController right) {
 		super();
+		Robot.dashboard.addDouble("Left Speed", left::get);
+		Robot.dashboard.addDouble("Right Speed", right::get);
 		this.left = left;
 		this.right = right;
 	}
