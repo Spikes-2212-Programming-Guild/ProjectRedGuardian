@@ -1,9 +1,14 @@
 package org.usfirst.frc.team2212.robot;
 
+import java.util.function.Supplier;
+
+import org.usfirst.frc.team2212.robot.commands.KeepDistanceConstantCM;
+import org.usfirst.frc.team2212.robot.commands.KeepDistanceConstantPixel;
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
+import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
-import com.spikes2212.utils.DashBoardController;
+
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,7 +32,8 @@ public class Robot extends IterativeRobot {
 	NetworkTable cameraInfo;
 	Command autonomousCommand;
 	SendableChooser chooser;
-	DashBoardController dashboard;
+	com.spikes2212.dashboard.DashBoardController dashboard;
+	public static double DistanceCM,widthPixel;
 	public static final String center = "center";
 
 	/**
@@ -45,12 +51,14 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard.putDouble("KD",0);
 
 		cameraInfo = NetworkTable.getTable("ImageProcessing");
-		dashboard = new DashBoardController();
+		dashboard = new com.spikes2212.dashboard.DashBoardController();
 		dashboard.addDouble(center,
 				() -> (cameraInfo.getNumber("x", 0) + 0.5 * cameraInfo.getNumber("width", 0)) / Constants.CAMERA_WIDTH);
 		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0.5);
 		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0.5);
 		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center, 0.5)));
+		ConstantHandler.addConstantDouble("DistanceCM", DistanceCM);
+		ConstantHandler.addConstantDouble("DistancePixel", widthPixel);
 		oi = new OI();
 	}
 
@@ -65,6 +73,8 @@ public class Robot extends IterativeRobot {
 		// Constants.KD=SmartDashboard.getDouble("KD");
 		SmartDashboard.putData(new DriveTank(drivetrain, () -> SmartDashboard.getNumber("TurnSpeed", 0),
 				() -> -SmartDashboard.getNumber("TurnSpeed", 0)));
+		SmartDashboard.putData(new KeepDistanceConstantCM(drivetrain, cameraInfo, DistanceCM));
+		SmartDashboard.putData(new KeepDistanceConstantPixel(drivetrain, cameraInfo, widthPixel));
 	}
 
 	public void disabledPeriodic() {

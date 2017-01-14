@@ -12,7 +12,7 @@ public class KeepDistanceConstantCM extends CommandGroup{
 	private static final double OBJECT_WIDTH_CM=10;
 	private static final double VIEW_ANGLE=50;
 	private static double widthCentemters,distance;
-	public KeepDistanceConstantCM(Drivetrain drivetrain,NetworkTable networkTables,int wantedDistance){
+	public KeepDistanceConstantCM(Drivetrain drivetrain,NetworkTable networkTables,double wantedDistance){
 		widthCentemters=(OBJECT_WIDTH_CM*WIDTH_PIXEL)/networkTables.getNumber("width", 0);
 		distance=(0.5*widthCentemters)/Math.tan(VIEW_ANGLE/2);
 		if(distance>wantedDistance){
