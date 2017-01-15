@@ -40,17 +40,16 @@ public class Robot extends IterativeRobot {
 		dashboard = new DashBoardController();
 		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
 				RobotMap.REAR_RIGHT_PORT);
-
+		SmartDashboard.putData("Turn Right", new DriveTank(drivetrain, -0.3, 0.3));
+		SmartDashboard.putData("Turn Left", new DriveTank(drivetrain, 0.3, -0.3));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 
 		// SmartDashboard.putDouble("KP",0);
 		// SmartDashboard.putDouble("KI",0);
 		// SmartDashboard.putDouble("KD",0);
-		dashboard.addDouble(center,
-				() -> (Constants.cameraInfo.getNumber("x", 0) + 0.5 * Constants.cameraInfo.getNumber("width", 0))
-						/ Constants.CAMERA_WIDTH);
-		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0.5);
-		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0.5);
+		dashboard.addDouble(center, Constants.center);
+		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0);
+		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0);
 		oi = new OI();
 	}
 
@@ -63,8 +62,7 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		SmartDashboard.putData(new DriveTankWithPID(0, 0, Constants.KP.get(), Constants.KI.get(), Constants.KD.get(),
-				drivetrain, Constants.leftSource, Constants.rightSource));
+		
 		dashboard.addDouble("right Source", Constants.rightSource::pidGet);
 		dashboard.addDouble("left Source", Constants.leftSource::pidGet);
 	}
@@ -112,7 +110,8 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-
+		SmartDashboard.putData(new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource, 0, 0,
+				Constants.KP.get(), Constants.KI.get(), Constants.KD.get(), 0.05));
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
