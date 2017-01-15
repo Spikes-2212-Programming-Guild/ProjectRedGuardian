@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class KeepDistanceConstantCM extends CommandGroup{
 	private static final int WIDTH_PIXEL=640;
 	private static final double OBJECT_WIDTH_CM=68.3;
-	private static final double VIEW_ANGLE=50;
-	private static final double DISTANCE_TO_VELCOTY_FACTOR=0.2;
+	private static final double VIEW_ANGLE=61;
+	private static final double DISTANCE_TO_VELCOTY_FACTOR=0.2;	
 	private static double widthCentemters,distance;
 	public KeepDistanceConstantCM(Drivetrain drivetrain,NetworkTable networkTables,double wantedDistance){
 		widthCentemters=(OBJECT_WIDTH_CM*WIDTH_PIXEL)/networkTables.getNumber("width", 0);
