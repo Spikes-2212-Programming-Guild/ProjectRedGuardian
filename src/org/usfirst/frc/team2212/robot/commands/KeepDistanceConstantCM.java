@@ -2,9 +2,7 @@ package org.usfirst.frc.team2212.robot.commands;
 
 import org.usfirst.frc.team2212.robot.Constants;
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
-
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 

@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
 		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0.5);
 		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0.5);
 		dashboard.addDouble("TurnSpeed", () -> Constants.getTurnSpeed(SmartDashboard.getNumber(center, 0.5)));
+		dashboard.addDouble("width cm", () -> (68.3 * Constants.CAMERA_WIDTH) / cameraInfo.getNumber("width", 0));
 		ConstantHandler.addConstantDouble("DistanceCM", DistanceCM);
 		ConstantHandler.addConstantDouble("DistancePixel", widthPixel);
 		oi = new OI();
