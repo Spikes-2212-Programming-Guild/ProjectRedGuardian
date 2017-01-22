@@ -7,7 +7,6 @@ import com.spikes2212.dashboard.ConstantHandler;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Constants {
 	public static final double MAX_SPEED = 1;
@@ -27,7 +26,7 @@ public class Constants {
 
 		@Override
 		public double pidGet() {
-			return -center.get();
+			return center.get();
 		}
 
 		@Override
