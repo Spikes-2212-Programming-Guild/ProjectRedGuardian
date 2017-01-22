@@ -2,17 +2,14 @@ package org.usfirst.frc.team2212.robot;
 
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
+import com.spikes2212.dashboard.DashBoardController;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
-import com.spikes2212.dashboard.DashBoardController;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -62,7 +59,7 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		
+
 		dashboard.addDouble("right Source", Constants.rightSource::pidGet);
 		dashboard.addDouble("left Source", Constants.leftSource::pidGet);
 	}
@@ -110,8 +107,9 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		SmartDashboard.putData(new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource, 0, 0,
-				Constants.KP.get(), Constants.KI.get(), Constants.KD.get(), 0.05));
+		SmartDashboard.putData(new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource,
+				Constants.wantedDistance.get(), Constants.wantedDistance.get(), Constants.KP.get(), Constants.KI.get(),
+				Constants.KD.get(), 0.05));
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
