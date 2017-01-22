@@ -28,7 +28,7 @@ public class Constants {
 
 	public static Supplier<Double> distance = () -> ((0.5 * widthCentemters.get()) / Math.tan(VIEW_ANGLE / 2));
 
-	//public static Supplier<Double> wantedDistance = ConstantHandler.addConstantDouble("Wanted Distance", 1);
+	public static Supplier<Double> wantedDistance = ConstantHandler.addConstantDouble("Wanted Distance", 1);
 	public static PIDSource leftSource = new PIDSource() {
 
 		@Override
