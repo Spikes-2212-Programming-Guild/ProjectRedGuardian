@@ -28,7 +28,6 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static OI oi;
 	Command autonomousCommand;
-	SendableChooser chooser;
 	public static DashBoardController dashboard;
 	public static final String center = "center";
 
@@ -84,18 +83,6 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		autonomousCommand = (Command) chooser.getSelected();
-
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
 	}
 
 	/**
