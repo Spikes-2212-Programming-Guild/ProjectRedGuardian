@@ -10,10 +10,10 @@ import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
  */
 public class RobotMap {
 
-	public static final int FRONT_LEFT_PORT = 2;
-	public static final int REAR_LEFT_PORT = 1;
-	public static final int FRONT_RIGHT_PORT = 9;
-	public static final int REAR_RIGHT_PORT = 8;
+	public static final int FRONT_LEFT_PORT = 9;
+	public static final int REAR_LEFT_PORT = 8;
+	public static final int FRONT_RIGHT_PORT = 2;
+	public static final int REAR_RIGHT_PORT = 1;
 
 	public interface Commands {
 	}

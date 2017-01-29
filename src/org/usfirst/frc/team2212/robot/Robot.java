@@ -1,18 +1,18 @@
 package org.usfirst.frc.team2212.robot;
 
+import java.util.function.Supplier;
+
 import org.usfirst.frc.team2212.robot.subsystems.Drivetrain;
 
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTank;
 import com.spikes2212.genericsubsystems.drivetrains.commands.DriveTankWithPID;
+import com.spikes2212.dashboard.ConstantHandler;
 import com.spikes2212.dashboard.DashBoardController;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.PIDSource;
-import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,8 +27,6 @@ public class Robot extends IterativeRobot {
 
 	public static Drivetrain drivetrain;
 	public static OI oi;
-	Command autonomousCommand;
-	SendableChooser chooser;
 	public static DashBoardController dashboard;
 	public static final String center = "center";
 
@@ -40,14 +38,12 @@ public class Robot extends IterativeRobot {
 		dashboard = new DashBoardController();
 		drivetrain = new Drivetrain(RobotMap.FRONT_LEFT_PORT, RobotMap.FRONT_RIGHT_PORT, RobotMap.REAR_LEFT_PORT,
 				RobotMap.REAR_RIGHT_PORT);
-		SmartDashboard.putData("Turn Right", new DriveTank(drivetrain, -0.3, 0.3));
-		SmartDashboard.putData("Turn Left", new DriveTank(drivetrain, 0.3, -0.3));
-		// chooser.addObject("My Auto", new MyAutoCommand());
-
-		// SmartDashboard.putDouble("KP",0);
-		// SmartDashboard.putDouble("KI",0);
-		// SmartDashboard.putDouble("KD",0);
+		SmartDashboard.putData("Turn Right", new DriveTank(drivetrain, 0.35, -0.35));
+		SmartDashboard.putData("Turn Left", new DriveTank(drivetrain, -0.35, 0.35));
+		SmartDashboard.putData("Drive", new DriveTank(drivetrain, ConstantHandler.addConstantDouble("left tank", -0.3),
+				ConstantHandler.addConstantDouble("right tank", -0.3)));
 		dashboard.addDouble(center, Constants.center);
+		
 		dashboard.addBoolean("isRight", () -> SmartDashboard.getNumber(center, 0) > 0);
 		dashboard.addBoolean("isLeft", () -> SmartDashboard.getNumber(center, 0) < 0);
 		oi = new OI();
@@ -62,7 +58,7 @@ public class Robot extends IterativeRobot {
 		// Constants.KP=SmartDashboard.getDouble("KP");
 		// Constants.KI=SmartDashboard.getDouble("KI");
 		// Constants.KD=SmartDashboard.getDouble("KD");
-		
+		dashboard.addDouble("width", Constants.widthSource::pidGet);
 		dashboard.addDouble("right Source", Constants.rightSource::pidGet);
 		dashboard.addDouble("left Source", Constants.leftSource::pidGet);
 	}
@@ -84,18 +80,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	public void autonomousInit() {
-		autonomousCommand = (Command) chooser.getSelected();
 
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
 	}
 
 	/**
@@ -110,10 +95,13 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		SmartDashboard.putData(new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource, 0, 0,
-				Constants.KP.get(), Constants.KI.get(), Constants.KD.get(), 0.05));
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
+		
+		SmartDashboard.putData("Oriante", new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource,
+				0, 0, Constants.KP.get(), Constants.KI.get(), Constants.KD.get(), Constants.tolerance.get()));
+		SmartDashboard.putData("Keep Distance",
+				new DriveTankWithPID(drivetrain, Constants.widthSource, Constants.widthSource,
+						Constants.targetWidth.get(), Constants.targetWidth.get(), Constants.KP.get(),
+						Constants.KI.get(), Constants.KD.get(), Constants.tolerance.get()));
 	}
 
 	/**
