@@ -27,7 +27,6 @@ public class Robot extends IterativeRobot {
 
 	public static Drivetrain drivetrain;
 	public static OI oi;
-	Command autonomousCommand;
 	public static DashBoardController dashboard;
 	public static final String center = "center";
 
@@ -99,8 +98,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		SmartDashboard.putData(new DriveTankWithPID(drivetrain, Constants.leftSource, Constants.rightSource, 0, 0,
 				Constants.KP.get(), Constants.KI.get(), Constants.KD.get(), 0.05));
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
 	}
 
 	/**
