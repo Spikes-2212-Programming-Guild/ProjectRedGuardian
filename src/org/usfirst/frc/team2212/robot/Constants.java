@@ -16,8 +16,8 @@ public class Constants {
 	public static Supplier<Double> KP = ConstantHandler.addConstantDouble("KP", 0.8);
 	public static Supplier<Double> KI = ConstantHandler.addConstantDouble("KI", 0.0);
 	public static Supplier<Double> KD = ConstantHandler.addConstantDouble("KD", 0.65);
-	public static Supplier<Double> center = () -> (((Constants.cameraInfo.getNumber("x", 0)
-			+ 0.5 * Constants.cameraInfo.getNumber("width", 0)) / CAMERA_WIDTH) - 0.5);
+	public static Supplier<Double> center = () -> (((Constants.cameraInfo.getNumber("x0", 0)
+			+ 0.5 * Constants.cameraInfo.getNumber("width0", 0)) / CAMERA_WIDTH) - 0.5);
 	public static Supplier<Double> tolerance = ConstantHandler.addConstantDouble("Tolerance", 0);
 	public static PIDSource leftSource = new PIDSource() {
 
